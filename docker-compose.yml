@@ -1,0 +1,20 @@
+web:
+  restart: always
+  build: ./web
+  expose:
+    - "8000"
+  volumes:
+    - ./web:/usr/src/app
+  env_file: .env
+  command: /usr/local/bin/gunicorn -w 2 -b :8000 app:app --reload 
+
+nginx:
+  restart: always
+  build: ./nginx/
+  ports:
+    - "80:80"
+  volumes:
+    - ./web/static:/www/static
+    - ./web:/usr/src/app
+  links:
+    - web:web
