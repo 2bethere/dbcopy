@@ -12,6 +12,7 @@ app.secret_key = DB_PORT = os.environ['SECRET_KEY'];
 
 @app.route('/')
 def home():
+    app.logger.debug("home");
     db = dbapi2.connect (host=dbutil.DB_HOST,  database=dbutil.BASE_DB, user=dbutil.DB_USER, password=dbutil.DB_PASS)
     db.autocommit = True
     cur = db.cursor()
@@ -50,6 +51,11 @@ def create():
     cur.execute(
          sql.SQL("CREATE ROLE {user} WITH LOGIN PASSWORD '123456'")
          .format(user=sql.Identifier(name+"_user"))
+         )
+    #RDS fix https://stackoverflow.com/questions/26684643/error-must-be-member-of-role-when-creating-schema-in-postgresql
+    cur.execute(
+         sql.SQL("GRANT {user} TO {admin}")
+         .format(user=sql.Identifier(name+"_user"), admin=sql.Identifier(dbutil.DB_USER))
          )
     #Create a copy of the database
     cur.execute(
