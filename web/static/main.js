@@ -1,5 +1,6 @@
 function checkDup(){
     var db_name = $("#name").val();
+    if(!db_name){$("#dbcreatebutton").prop('disabled', true); return;};
     $.getJSON( "check/"+db_name,function(){
 
     }).done(function(data) {

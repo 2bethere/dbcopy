@@ -13,6 +13,7 @@
     {% endif %}
     {% endwith %}
     <p>Password for database is always 123456</p>
+    <p>DB name should not be empty and should only contain letters and numbers, no spaces</p>
   </div>
   <hr>
   <form class="form-inline" method="get" action="create/" id="dbform">
@@ -22,7 +23,7 @@
     <div class="form-group mx-sm-3">
       <span class="badge badge-pill badge-warning invisible" id="duplabel">DB already exists</span>
     </div>
-    <button type="submit" class="btn btn-primary" id="dbcreatebutton">Create database</button>
+    <button type="submit" class="btn btn-primary" id="dbcreatebutton" disabled>Create database</button>
   </form>
 
   <br/>
